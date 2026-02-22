@@ -42,12 +42,16 @@ function toggleStyle(id) {
         filterSection.classList.remove('hidden');
         renderInterview();
     } else if(id=='all-btn'){
-        allCardSection.classList.add('hidden');
-        filterSection.classList.remove('hidden');
+        allCardSection.classList.remove('hidden');
+        filterSection.classList.add('hidden');
     } else if(id=='rejected-btn'){
         allCardSection.classList.add('hidden');
         filterSection.classList.remove('hidden');
         renderReject();
+    }
+
+    if (id == 'dlt-btn') {
+        
     }
     
 }
@@ -142,12 +146,18 @@ mainContainer.addEventListener('click', function (event) {
 
 
 function renderInterview() {
-    filterSection.innerHTML = ``;
+    filterSection.innerHTML = `
+    <div class="text-center items-center flex flex-col py-16 px-10 bg-white rounded-[8px] border-2 border-[#f1f2f4]">
+                <img src="./jobs.png" alt="">
+                <h3 class="text-2xl font-semibold">No Jobs Available</h3>
+                <p class="text-gray-500">Check back soon for new job opportunities</p>
+    </div>
+    `;
 
     for (const interview of InterviewList) {
         // console.log(interview)
         let div = document.createElement('div');
-        div.className = 'p-6 bg-white rounded-[8px] border-2 border-[#f1f2f4]'
+        div.className = 'p-6 mb-3 bg-white rounded-[8px] border-2 border-[#f1f2f4]'
         div.innerHTML = `
                 <div class="flex justify-between">
                     <h4 class="companyName text-[18px] font-semibold ">${interview.companyName}</h4>
@@ -162,6 +172,8 @@ function renderInterview() {
                     <button class="rejectClick btn btn-outline btn-error">REJECTED</button>
                 </div>
         `
+            filterSection.innerHTML = ``
+
         filterSection.appendChild(div)
     }
 }
@@ -170,12 +182,16 @@ function renderInterview() {
 
 
 function renderReject() {
-    filterSection.innerHTML = ``;
+    filterSection.innerHTML = `<div class="text-center items-center flex flex-col py-16 px-10 bg-white rounded-[8px] border-2 border-[#f1f2f4]">
+                <img src="./jobs.png" alt="">
+                <h3 class="text-2xl font-semibold">No Jobs Available</h3>
+                <p class="text-gray-500">Check back soon for new job opportunities</p>
+    </div>`;
 
     for (const reject of rejectList) {
         // console.log(interview)
         let div = document.createElement('div');
-        div.className = 'p-6 bg-white rounded-[8px] border-2 border-[#f1f2f4]'
+        div.className = 'p-6 mb-3 bg-white rounded-[8px] border-2 border-[#f1f2f4]'
         div.innerHTML = `
                 <div class="flex justify-between">
                     <h4 class="companyName text-[18px] font-semibold ">${reject.companyName}</h4>
@@ -190,6 +206,7 @@ function renderReject() {
                     <button class="rejectClick btn btn-outline btn-error" disabled>REJECTED</button>
                 </div>
         `
+        filterSection.innerHTML = ``
         filterSection.appendChild(div)
     }
 }
