@@ -39,22 +39,24 @@ function toggleStyle(id) {
 
     if (id=='interview-btn') {
         allCardSection.classList.add('hidden');
-        filterSection.classList.add('hidden');
+        filterSection.classList.remove('hidden');
         renderInterview();
-    }else if(id=='all-btn'){
+    } else if(id=='all-btn'){
         allCardSection.classList.add('hidden');
-        filterSection.classList.add('hidden');
-    }
-    else if(id=='rejected-btn'){
+        filterSection.classList.remove('hidden');
+    } else if(id=='rejected-btn'){
         allCardSection.classList.add('hidden');
-        filterSection.classList.add('hidden');
+        filterSection.classList.remove('hidden');
         renderReject();
     }
+    
 }
 
 // 2
 mainContainer.addEventListener('click', function (event) {
     if (event.target.classList.contains('interviewClick')) {
+
+        event.target.disabled =true;
         const parentNode = event.target.parentNode.parentNode;
         // console.log(parentNode)
         const companyName = parentNode.querySelector('.companyName').innerText;
@@ -62,6 +64,10 @@ mainContainer.addEventListener('click', function (event) {
         const location = parentNode.querySelector('.location').innerText;
         const status = parentNode.querySelector('.statusChk').innerText;
         const details = parentNode.querySelector('.details').innerText;
+        const interviewClicked = parentNode.querySelector('.interviewClick').setAttribute('disabled', 'true');
+        const rejectClicked = parentNode.querySelector('.rejectClick').removeAttribute('disabled', 'true');
+
+        
 
         parentNode.querySelector('.statusChk').innerText = 'Interviewed';
 
@@ -70,7 +76,9 @@ mainContainer.addEventListener('click', function (event) {
             position,
             location,
             status: 'Interviewed',
-            details
+            details,
+            interviewClicked,
+            rejectClicked
         }
 
         const companyExist = InterviewList.find(item => item.companyName == cardInfo.companyName);
@@ -98,6 +106,8 @@ mainContainer.addEventListener('click', function (event) {
         const location = parentNode.querySelector('.location').innerText;
         const status = parentNode.querySelector('.statusChk').innerText;
         const details = parentNode.querySelector('.details').innerText;
+        const interviewClicked = parentNode.querySelector('.interviewClick').removeAttribute('disabled', 'true');
+        const rejectClicked = parentNode.querySelector('.rejectClick').setAttribute('disabled', 'true');
 
          parentNode.querySelector('.statusChk').innerText = 'Rejected';
 
@@ -106,10 +116,12 @@ mainContainer.addEventListener('click', function (event) {
             position,
             location,
             status: 'Rejected',
-            details
+            details,
+            interviewClicked,
+            rejectClicked
         }
 
-        const companyExist = InterviewList.find(item => item.companyName == cardInfo.companyName);
+        const companyExist = rejectList.find(item => item.companyName == cardInfo.companyName);
         if (!companyExist) {
             rejectList.push(cardInfo)
         }
@@ -174,7 +186,7 @@ function renderReject() {
                 <p class="px-3 py-2 bg-[#eef4ff] inline-block my-2 statusChk">${reject.status}</p>
                 <p class="mb-5 text-[14px] details">${reject.details}</p>
                 <div>
-                    <button class="interviewClick btn btn-outline btn-success" disabled>INTERVIEW</button>
+                    <button class="interviewClick btn btn-outline btn-success" >INTERVIEW</button>
                     <button class="rejectClick btn btn-outline btn-error" disabled>REJECTED</button>
                 </div>
         `
