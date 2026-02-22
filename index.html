@@ -17,25 +17,25 @@
         }
     </style>
 </head>
-<body class="bg-[#f8fafc]">
+<body class="bg-[#f8fafc] py-16">
 
-    <header class="pt-[60px] ">
+    <header class="">
         <div class="container mx-auto space-y-5">
             <div class="">
                 <h2 class="font-bold text-[32px]">Job Application Tracker</h2>
             </div>
             <div class="grid grid-cols-3 gap-4">
-                <div id="total" class="p-5 bg-white rounded-[5px]">
+                <div  class="p-5 bg-white rounded-[5px]">
                     <p>Total</p>
-                    <p class="font-bold text-2xl">0</p>
+                    <p id="total" class="font-bold text-2xl">0</p>
                 </div>
                 <div id="interview" class="p-5 bg-white rounded-[5px]">
                     <p>Interview</p>
-                    <p class="font-bold text-2xl text-green-400">0</p>
+                    <p id="interviewCount" class="font-bold text-2xl text-green-400">0</p>
                 </div>
                 <div id="rejected" class="p-5 bg-white rounded-[5px]">
                     <p>Rejected</p>
-                    <p class="font-bold text-2xl  text-red-500">0</p>
+                    <p id="rejectCount" class="font-bold text-2xl  text-red-500">0</p>
                 </div>
             </div>
         </div>
@@ -51,8 +51,14 @@
                 <button id="rejected-btn" class="btn  btn-neutral/4 btn-outline">Rejected</button>
             </div>         
         </section>
+
+        <!-- Filtered card -->
+
+        <section id="filtered-section" class="hidden">
+
+        </section>
 <!-- job list -->
-        <section class="space-y-4">
+        <section id="allCards" class="space-y-4">
             <div class="p-6 bg-white rounded-[8px] border-2 border-[#f1f2f4]">
                 <div class="flex justify-between">
                     <h4 class="text-[18px] font-semibold ">Mobile First Corp</h4>
@@ -176,5 +182,9 @@
         </section>
 
     </main>
+
+
+
+<script src="./script.js"></script> 
 </body>
 </html>
