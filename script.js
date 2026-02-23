@@ -50,9 +50,9 @@ function toggleStyle(id) {
         renderReject();
     }
 
-    if (id == 'dlt-btn') {
+    // if (id == 'dlt-btn') {
         
-    }
+    // }
     
 }
 
@@ -137,6 +137,63 @@ mainContainer.addEventListener('click', function (event) {
 
         }
         calculateCount();
+    }else if (event.target.closest('.dltClicked')) {
+        const selectedCard = event.target.closest('.cards');
+
+        // console.log(event)
+        if (selectedCard) {
+
+        const companyName = selectedCard.querySelector('.companyName').innerText;
+        // const position = parentNode.querySelector('.position').innerText;
+        // const location = parentNode.querySelector('.location').innerText;
+        // const status = parentNode.querySelector('.statusChk').innerText;
+        // const details = parentNode.querySelector('.details').innerText;
+
+// console.log(companyName)
+        // const cardInfo = {
+        //     companyName
+        // }
+
+        InterviewList = InterviewList.filter(item => item.companyName !== companyName);
+
+        rejectList = rejectList.filter(item => item.companyName !== companyName);
+        selectedCard.remove();
+// got some help from ai
+
+        let allCards= document.getElementById('allCards').children
+        for (const oneCard of allCards) {
+            let cardRemove = oneCard.querySelector('.companyName');
+            if (cardRemove && cardRemove.innerText === companyName) {
+                oneCard.remove();
+            }
+        }
+
+        
+        
+        calculateCount();
+
+        if (allCardSection.children.length =='0') {
+            allCardSection.innerHTML=` <div class="text-center items-center flex flex-col py-16 px-10 bg-white rounded-[8px] border-2 border-[#f1f2f4]">
+                <img src="./jobs.png" alt="">
+                <h3 class="text-2xl font-semibold">No Jobs Available</h3>
+                <p class="text-gray-500">Check back soon for new job opportunities</p>
+    </div>`
+            // total.innerText === '0'
+        }
+       
+        
+
+         if (currentStatus=='interview-btn') {
+            calculateCount();
+            renderInterview();
+            
+        } else if (currentStatus == 'rejected-btn') {
+            calculateCount();
+            renderReject(); 
+            
+        } 
+        
+     }
     }
 })
 
@@ -157,11 +214,11 @@ function renderInterview() {
     for (const interview of InterviewList) {
         // console.log(interview)
         let div = document.createElement('div');
-        div.className = 'p-6 mb-3 bg-white rounded-[8px] border-2 border-[#f1f2f4]'
+        div.className = 'cards p-6 mb-3 bg-white rounded-[8px] border-2 border-[#f1f2f4]'
         div.innerHTML = `
                 <div class="flex justify-between">
                     <h4 class="companyName text-[18px] font-semibold ">${interview.companyName}</h4>
-                    <button id="dlt-btn" class="btn btn-soft btn-error btn-circle"><i class="fa-solid fa-trash"></i></button>
+                    <button id="dlt-btn" class="btn btn-soft btn-error btn-circle dltClicked"><i class="fa-solid fa-trash"></i></button>
                 </div>
                 <p class="position text-gray-400">${interview.position}</p>
                 <p class="location text-gray-400 my-5">${interview.location}</p>
@@ -191,11 +248,11 @@ function renderReject() {
     for (const reject of rejectList) {
         // console.log(interview)
         let div = document.createElement('div');
-        div.className = 'p-6 mb-3 bg-white rounded-[8px] border-2 border-[#f1f2f4]'
+        div.className = 'cards p-6 mb-3 bg-white rounded-[8px] border-2 border-[#f1f2f4]'
         div.innerHTML = `
                 <div class="flex justify-between">
                     <h4 class="companyName text-[18px] font-semibold ">${reject.companyName}</h4>
-                    <button id="dlt-btn" class="btn btn-soft btn-error btn-circle"><i class="fa-solid fa-trash"></i></button>
+                    <button id="dlt-btn" class="btn btn-soft btn-error btn-circle dltClicked"><i class="fa-solid fa-trash"></i></button>
                 </div>
                 <p class="position text-gray-400">${reject.position}</p>
                 <p class="location text-gray-400 my-5">${reject.location}</p>
