@@ -44,7 +44,11 @@
     <main class="container mx-auto">
 
         <section class="mb-5">
-            <h3 class="text-[22px] font-semibold mb-5">Available Jobs</h3>   
+            <div class="flex justify-between ">
+                <h3 class="text-[22px] font-semibold mb-5">Available Jobs</h3> 
+                <span  class="text-gray-400 text-center flex gap-1"><span id="availableCount">0 </span> jobs</span>
+            </div>
+
             <div id="btns" class="flex gap-3 ">
                 <button onclick="toggleStyle('all-btn')" id="all-btn" class="btn btn-active btn-info">All</button>
                 <button onclick=" toggleStyle('interview-btn')" id="interview-btn" class="btn btn-neutral/4 btn-outline">Interview</button>

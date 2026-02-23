@@ -5,6 +5,7 @@ let currentStatus ='all';
 let total = document.getElementById('total');
 let interviewCount = document.getElementById('interviewCount');
 let rejectCount = document.getElementById('rejectCount');
+let availableCount = document.getElementById('availableCount');
 
 let allbtn = document.getElementById('all-btn');
 let interviewBtn = document.getElementById('interview-btn');
@@ -16,8 +17,19 @@ const filterSection = document.getElementById('filtered-section')
 
 function calculateCount() {
     total.innerText = allCardSection.children.length;
+    availableCount.innerText = allCardSection.children.length;
     interviewCount.innerText = InterviewList.length;
     rejectCount.innerText = rejectList.length;
+    if (currentStatus== 'interview-btn') {
+        availableCount.innerText = InterviewList.length;
+    }
+    else if (currentStatus== 'rejected-btn') {
+        availableCount.innerText = rejectList.length;
+    }
+    else  {
+        availableCount.innerText = allCardSection.children.length;
+    }
+
 }
 calculateCount();
 
@@ -41,13 +53,16 @@ function toggleStyle(id) {
         allCardSection.classList.add('hidden');
         filterSection.classList.remove('hidden');
         renderInterview();
+        availableCount.innerText = InterviewList.length;
     } else if(id=='all-btn'){
         allCardSection.classList.remove('hidden');
         filterSection.classList.add('hidden');
+        availableCount.innerText = allCardSection.children.length;
     } else if(id=='rejected-btn'){
         allCardSection.classList.add('hidden');
         filterSection.classList.remove('hidden');
         renderReject();
+        availableCount.innerText = rejectList.length;
     }
 
     // if (id == 'dlt-btn') {
@@ -171,6 +186,8 @@ mainContainer.addEventListener('click', function (event) {
         
         
         calculateCount();
+        
+        
 
         if (allCardSection.children.length =='0') {
             allCardSection.innerHTML=` <div class="text-center items-center flex flex-col py-16 px-10 bg-white rounded-[8px] border-2 border-[#f1f2f4]">
@@ -186,12 +203,18 @@ mainContainer.addEventListener('click', function (event) {
          if (currentStatus=='interview-btn') {
             calculateCount();
             renderInterview();
+            availableCount.innerText = InterviewList.length;
+            
             
         } else if (currentStatus == 'rejected-btn') {
             calculateCount();
             renderReject(); 
+            availableCount.innerText = rejectList.length;
             
-        } 
+        } else{
+            calculateCount();
+            availableCount.innerText= allCardSection.children.length;
+        }
         
      }
     }
@@ -210,6 +233,9 @@ function renderInterview() {
                 <p class="text-gray-500">Check back soon for new job opportunities</p>
     </div>
     `;
+    // availableCount.innerText=filterSection.length
+
+
 
     for (const interview of InterviewList) {
         // console.log(interview)
@@ -231,7 +257,8 @@ function renderInterview() {
         `
             filterSection.innerHTML = ``
 
-        filterSection.appendChild(div)
+        filterSection.appendChild(div);
+        
     }
 }
 
