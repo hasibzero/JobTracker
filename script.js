@@ -16,8 +16,8 @@ const mainContainer = document.querySelector('main')
 const filterSection = document.getElementById('filtered-section')
 
 function calculateCount() {
-    total.innerText = allCardSection.children.length;
-    availableCount.innerText = allCardSection.children.length;
+    total.innerText = allCardSection.querySelectorAll('.cards').length;
+    availableCount.innerText = allCardSection.querySelectorAll('.cards').length;
     interviewCount.innerText = InterviewList.length;
     rejectCount.innerText = rejectList.length;
     if (currentStatus== 'interview-btn') {
@@ -27,7 +27,7 @@ function calculateCount() {
         availableCount.innerText = rejectList.length;
     }
     else  {
-        availableCount.innerText = allCardSection.children.length;
+        availableCount.innerText = allCardSection.querySelectorAll('.cards').length;
     }
 
 }
@@ -52,17 +52,19 @@ function toggleStyle(id) {
     if (id=='interview-btn') {
         allCardSection.classList.add('hidden');
         filterSection.classList.remove('hidden');
-        renderInterview();
+       
         availableCount.innerText = InterviewList.length;
+         renderInterview();
     } else if(id=='all-btn'){
         allCardSection.classList.remove('hidden');
         filterSection.classList.add('hidden');
-        availableCount.innerText = allCardSection.children.length;
+        availableCount.innerText = allCardSection.querySelectorAll('.cards').length;
     } else if(id=='rejected-btn'){
         allCardSection.classList.add('hidden');
         filterSection.classList.remove('hidden');
-        renderReject();
+        
         availableCount.innerText = rejectList.length;
+        renderReject()
     }
 
     // if (id == 'dlt-btn') {
@@ -152,7 +154,7 @@ mainContainer.addEventListener('click', function (event) {
 
         }
         calculateCount();
-    }else if (event.target.closest('.dltClicked')) {
+    } else if (event.target.closest('.dltClicked')) {
         const selectedCard = event.target.closest('.cards');
 
         // console.log(event)
@@ -178,6 +180,7 @@ mainContainer.addEventListener('click', function (event) {
         let allCards= document.getElementById('allCards').children
         for (const oneCard of allCards) {
             let cardRemove = oneCard.querySelector('.companyName');
+            // logic help from ai 
             if (cardRemove && cardRemove.innerText === companyName) {
                 oneCard.remove();
             }
@@ -213,7 +216,7 @@ mainContainer.addEventListener('click', function (event) {
             
         } else{
             calculateCount();
-            availableCount.innerText= allCardSection.children.length;
+            availableCount.innerText= allCardSection.querySelectorAll('.cards').length;
         }
         
      }
@@ -226,13 +229,19 @@ mainContainer.addEventListener('click', function (event) {
 
 
 function renderInterview() {
-    filterSection.innerHTML = `
+    filterSection.innerHTML = ``
+
+    if (InterviewList.length==0) {
+        filterSection.innerHTML = `
     <div class="text-center items-center flex flex-col py-16 px-10 bg-white rounded-[8px] border-2 border-[#f1f2f4]">
                 <img src="./jobs.png" alt="">
                 <h3 class="text-2xl font-semibold">No Jobs Available</h3>
                 <p class="text-gray-500">Check back soon for new job opportunities</p>
     </div>
     `;
+    return;
+    }
+    
     // availableCount.innerText=filterSection.length
 
 
@@ -255,7 +264,7 @@ function renderInterview() {
                     <button class="rejectClick btn btn-outline btn-error">REJECTED</button>
                 </div>
         `
-            filterSection.innerHTML = ``
+            
 
         filterSection.appendChild(div);
         
@@ -266,11 +275,18 @@ function renderInterview() {
 
 
 function renderReject() {
-    filterSection.innerHTML = `<div class="text-center items-center flex flex-col py-16 px-10 bg-white rounded-[8px] border-2 border-[#f1f2f4]">
+    filterSection.innerHTML = ``
+
+    if (rejectList.length==0) {
+        filterSection.innerHTML = `
+    <div class="text-center items-center flex flex-col py-16 px-10 bg-white rounded-[8px] border-2 border-[#f1f2f4]">
                 <img src="./jobs.png" alt="">
                 <h3 class="text-2xl font-semibold">No Jobs Available</h3>
                 <p class="text-gray-500">Check back soon for new job opportunities</p>
-    </div>`;
+    </div>
+    `;
+    return;
+    }
 
     for (const reject of rejectList) {
         // console.log(interview)
@@ -290,7 +306,7 @@ function renderReject() {
                     <button class="rejectClick btn btn-outline btn-error" disabled>REJECTED</button>
                 </div>
         `
-        filterSection.innerHTML = ``
+        
         filterSection.appendChild(div)
     }
 }
